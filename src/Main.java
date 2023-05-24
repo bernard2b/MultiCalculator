@@ -26,14 +26,15 @@ public class Main {
         while (keepCalculating) {
             boolean validOperator = false;
             do {
-                System.out.print("Enter an operator (+, -, *, /) or '=' to show result: ");
+                System.out.print("Enter an operator (+, -, *, /, %, ^) or '=' to show result: ");
                 operator = scanner.next().charAt(0);
 
                 if (operator == '=') {
                     System.out.println("Result: " + result);
                     keepCalculating = false;
                     break;
-                } else if (operator == '+' || operator == '-' || operator == '*' || operator == '/') {
+                } else if (operator == '+' || operator == '-' || operator == '*' || operator == '/' ||
+                        operator == '%' || operator == '^') {
                     System.out.print("Enter the next number: ");
                     if (scanner.hasNextDouble()) {
                         num2 = scanner.nextDouble();
@@ -54,6 +55,12 @@ public class Main {
                                     System.out.println(e.getMessage());
                                 }
                                 break;
+                            case '%':
+                                result = BasicOperators.modulo(result, num2);
+                                break;
+                            case '^':
+                                result = BasicOperators.power(result, num2);
+                                break;
                             default:
                                 System.out.println("Error: Invalid operator");
                                 break;
@@ -71,3 +78,4 @@ public class Main {
         }
     }
 }
+
