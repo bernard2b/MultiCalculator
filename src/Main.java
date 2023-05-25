@@ -5,7 +5,7 @@ public class Main {
 
         Scanner scanner =new Scanner(System.in);
 
-        System.out.print("Enter 1 for Regular Calculator, 2 for Converter Calculator");
+        System.out.print("Enter 1 for Regular Calculator, 2 for Converter Calculator: ");
         int choice = scanner.nextInt();
 
         if(choice == 1) {
