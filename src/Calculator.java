@@ -7,50 +7,45 @@ public class Calculator {
     public void start() {
         Scanner scanner = new Scanner(System.in);
 
-        double num1;
-        double num2;
-        char operator;
+        double num1 = getValidNumber(scanner, "Enter the first number: ");
+        result = num1;
 
-        boolean validNum1 = false;
-        do {
-            System.out.print("Enter the first number: ");
-            if (scanner.hasNextDouble()) {
-                num1 = scanner.nextDouble();
-                result = num1; // Assign the initial number as the result
-                validNum1 = true;
-            } else {
-                scanner.next();
-                System.out.println("Error: Invalid number. Please try again.");
+        while (true) {
+            char operator = getValidOperator(scanner);
+            if (operator == '=') {
+                System.out.println("Result: " + result);
+                break;
             }
-        } while (!validNum1);
 
-        boolean keepCalculating = true;
-        while (keepCalculating) {
-            boolean validOperator = false;
-            do {
-                System.out.print("Enter an operator (+, -, *, /, %, ^) or '=' to show result: ");
-                operator = scanner.next().charAt(0);
+            double num2 = getValidNumber(scanner, "Enter the next number: ");
+            result = performOperation(result, operator, num2);
+            System.out.println("Intermediate Result: " + result);
+        }
+    }
 
-                if (operator == '=') {
-                    System.out.println("Result: " + result);
-                    keepCalculating = false;
-                    break;
-                } else if (operator == '+' || operator == '-' || operator == '*' || operator == '/'
-                        || operator == '%' || operator == '^') {
-                    System.out.print("Enter the next number: ");
-                    if (scanner.hasNextDouble()) {
-                        num2 = scanner.nextDouble();
-                        result = performOperation(result, operator, num2);
-                        System.out.println("Intermediate Result: " + result);
-                    } else {
-                        scanner.next();
-                        System.out.println("Error: Invalid number. Please try again.");
-                    }
-                    validOperator = true;
-                } else {
-                    System.out.println("Error: Invalid operator. Please try again.");
-                }
-            } while (!validOperator);
+    private double getValidNumber(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            if (scanner.hasNextDouble()) {
+                double number = scanner.nextDouble();
+                scanner.nextLine();
+                return number;
+            } else {
+                System.out.println("Error: Invalid number. Please try again.");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    private char getValidOperator(Scanner scanner) {
+        while (true) {
+            System.out.print("Enter an operator (+, -, *, /, %, ^) or '=' to show result: ");
+            char operator = scanner.nextLine().charAt(0);
+            if (operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%' || operator == '^' || operator == '=') {
+                return operator;
+            } else {
+                System.out.println("Error: Invalid operator. Please try again.");
+            }
         }
     }
 
